@@ -1,32 +1,40 @@
 <template>
   <!-- 在vue3中templeate模板的使用方式基本没有发生任何变化
   唯一要注意的就是在模板中使用到的任何响应式数据都要在setup函数中返回（包括方法） -->
-  <div ref="test">Test</div>
-  <ul>
-    <li>msg: {{ msg }}</li>
-    <li>double: {{ double }}</li>
-    <li>obj: {{ Object.keys(obj).toString() }}</li>
-    <li>arr: {{ arr[0] }}</li>
-    <li>age: {{ age }}</li>
-  </ul>
-  <div class="btn">
-    <button @click="handleMsg">按钮1</button>
-    <button @click="handleAge">按钮2</button>
-    <button @click="handleName">按钮3</button>
-    <button>按钮4</button>
-  </div>
+  <com-ref></com-ref>
+  <com-reactive></com-reactive>
+  <com-watch></com-watch>
+  <com-computed></com-computed>
+  <com-getDOM></com-getDOM>
+  <com-provide></com-provide>
+  <com-defineAsyncComponent></com-defineAsyncComponent>
+  <com-vuex></com-vuex>
+  <com-teleport></com-teleport>
+  <com-props v-model:a="a" v-model="b"></com-props>
+  <com-emit @test-emit="handleEmit"></com-emit>
 </template>
 <script>
+import ComRef from '@/components/ComRef.vue'
+import ComReactive from '@/components/ComReactive.vue'
+import ComWatch from '@/components/ComWatch.vue'
+import ComComputed from '@/components/ComComputed.vue'
+import ComGetDOM from '@/components/ComGetDOM.vue'
+import ComProvide from '@/components/ComProvide.vue'
+import ComDefineAsyncComponent from '@/components/ComDefineAsyncComponent.vue'
+import ComVuex from '@/components/ComVuex.vue'
+import ComTeleport from '@/components/ComTeleport.vue'
+import ComProps from '@/components/ComProps.vue'
+import ComEmit from '@/components/ComEmit.vue'
 // 在vue3中，通过把大多数的全局API和内部的helper作为ES模块导出来实现减少打包体积
 // 这样就能允许现代的打包工具对模块的依赖做静态分析，并且舍弃没有使用到的代码
 // 模板编译器同样会生成tree-shaking友好的代码，只有模板中实际使用的功能才会在生成的代码中导入相应的helper
 import {
   ref,
-  reactive,
-  computed,
-  watch,
-  watchEffect,
-  toRef, // 把reactive对象上的一个属性变成ref
+  // reactive,
+  // computed,
+  // watch,
+  // watchEffect,
+  // toRef, // 把reactive对象上的一个属性变成ref
   // toRefs, // 把一个响应式对象转换成普通对象，该普通对象的每个property都是一个ref
   // readonly,
   // isRef, // 判断一个值是否是ref
@@ -37,59 +45,33 @@ import {
   // inject,
   onMounted,
   onUpdated,
-  onUnmounted
+  onUnmounted,
+  getCurrentInstance
 } from 'vue'
 
 export default {
   name: 'test',
-  setup(props, context) {
-    console.log('setup')
-    console.log('props:', props, 'context:', context)
-    // ref
-    const msg = ref(123)
-    // 注意setup返回的ref在模板中会自动解开，不需要写.value【setup内部需要.value】
-    const handleMsg = () => {
-      console.log('按钮1点击了')
-      msg.value++
-    }
-    // reactive
-    const obj = reactive({
-      name: 'vue3',
-      age: 18,
-      msg
-    })
-    const handleName = () => {
-      obj.name = 'vue'
-      obj.gender = 'male'
-    }
-    const arr = reactive([1, 2])
+  components: {
+    ComRef,
+    ComReactive,
+    ComWatch,
+    ComComputed,
+    ComGetDOM,
+    ComProvide,
+    ComDefineAsyncComponent,
+    ComVuex,
+    ComTeleport,
+    ComProps,
+    ComEmit
+  },
+  setup() {
+    // 通过getCurrentInstance获取createApp实例上的全局变量
+    const { proxy } = getCurrentInstance()
+    console.log('$gobal:', proxy.$gobal)
 
-    // toRef
-    const age = toRef(obj, 'age')
-    const handleAge = () => {
-      age.value++
-    }
-
-    // computed
-    const double = computed(() => msg.value * 2)
-
-    // watch
-    watch(
-      () => obj.age,
-      (newAge, oldAge) => {
-        console.log(newAge, oldAge)
-      }
-    )
-    watchEffect(() => {
-      // watch 副作用函数 首次加载会触发,当值发生变化也会触发
-      console.log('年龄:', age.value)
-      console.log('年龄:', obj.age)
-    })
-    const test = ref(null)
     // 生命周期
     onMounted(() => {
       console.log('mounted')
-      console.log(test.value)
     })
     onUpdated(() => {
       console.log('updated')
@@ -97,17 +79,13 @@ export default {
     onUnmounted(() => {
       console.log('unmounted')
     })
-
+    const handleEmit = (val) => {
+      console.log('自定义事件派发：', val)
+    }
     return {
-      msg,
-      obj,
-      arr,
-      age,
-      double,
-      test,
-      handleMsg,
-      handleAge,
-      handleName
+      a: ref(12),
+      b: ref(13),
+      handleEmit
     }
   }
   // beforeCreate() {
@@ -119,7 +97,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   ul {
     padding: 10px;
     list-style: none;
@@ -129,7 +107,14 @@ export default {
       border-bottom: 1px solid #ccc;
     }
   }
-  .btn > button {
+  details {
+    padding: 10px;
+    text-align: left;
+    summary {
+      margin-bottom: 10px;
+    }
+  }
+  button {
     padding: 0 5px;
     margin-right: 10px;
   }
