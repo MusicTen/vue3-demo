@@ -1,7 +1,7 @@
 <template>
   <details>
     <summary>Vuex-演示</summary>
-    <button @click="handle">节点{{ count }}</button>
+    <button @click="handle">触发action{{ count }}</button>
   </details>
 </template>
 
@@ -13,8 +13,7 @@ export default {
   name: 'ComVuex',
   setup() {
     const store = useStore()
-    console.log(store)
-    console.log(store.getters.count)
+    // console.log(store)
     const count = computed(() => store.state.count)
 
     const handle = () => {

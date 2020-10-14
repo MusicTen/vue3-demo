@@ -26,7 +26,7 @@ export default {
     const add = () => {
       a++
       b.value++
-      console.log('a:', a) // 改变不被子孙组件响应
+      // console.log('a:', a) // 改变不被子孙组件响应
     }
     return {
       add

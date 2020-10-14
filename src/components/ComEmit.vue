@@ -1,7 +1,7 @@
 <template>
   <details>
     <summary>自定义事件派发-演示</summary>
-    <button @click="handle">节点</button>
+    <button @click="handle">发送</button>
   </details>
 </template>
 

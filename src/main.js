@@ -1,10 +1,10 @@
-import * as vue from 'vue'
+// import * as vue from 'vue'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
-console.table(Object.keys(vue))
+// console.table(Object.keys(vue))
 const app = createApp(App)
 app
   .use(store)

@@ -14,7 +14,7 @@ export default {
     const btn = ref(null)
 
     onMounted(() => {
-      console.log(btn.value)
+      // console.log(btn.value)
     })
 
     return {

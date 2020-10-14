@@ -98,15 +98,6 @@ export default {
 </script>
 
 <style lang="scss">
-  ul {
-    padding: 10px;
-    list-style: none;
-    text-align: left;
-    li {
-      line-height: 1.5em;
-      border-bottom: 1px solid #ccc;
-    }
-  }
   details {
     padding: 10px;
     text-align: left;

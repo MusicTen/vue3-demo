@@ -11,7 +11,7 @@
 <script>
 import {
   reactive,
-  isReactive, // 判断一个对象是否是由reactive创建的响应式代理
+  // isReactive, // 判断一个对象是否是由reactive创建的响应式代理
   toRef, // 把reactive对象上的一个属性变成ref
   toRefs // 把一个响应式对象转换成普通对象，该普通对象的每个property都是一个ref
 } from 'vue'
@@ -22,8 +22,8 @@ export default {
     const state = reactive({ msg: 1, age: 123 })
     const obj = reactive({ type: 'vue3' })
 
-    console.log('state:', state)
-    console.log(isReactive(state))
+    // console.log('state:', state)
+    // console.log(isReactive(state))
 
     const handleMsg = () => {
       state.msg++

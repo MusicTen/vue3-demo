@@ -17,7 +17,7 @@ export default {
   // 不能解构props，解构丧失响应
   setup(props, context) {
     console.log('props:', props)
-    console.log('a:', props.a)
+    // console.log('a:', props.a)
     console.log('context:', context)
   }
 }

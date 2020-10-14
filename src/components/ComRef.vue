@@ -8,8 +8,8 @@
 
 <script>
 import {
-  ref,
-  isRef // 判断一个值是否是ref
+  // isRef, // 判断一个值是否是ref
+  ref
 } from 'vue'
 
 export default {
@@ -17,14 +17,14 @@ export default {
   setup() {
     const msg = ref(1)
     const arr = ref([1, 2, 3])
-    console.log('msg:', msg)
-    console.log(isRef(msg))
+    // console.log('msg:', msg)
+    // console.log(isRef(msg))
     const handleMsg = () => {
       // 注意setup返回的ref在模板中会自动解开，不需要写.value【setup内部需要.value】
       msg.value++
     }
     const handleArr = () => {
-      console.log(arr.value[0])
+      // console.log(arr.value[0])
       arr.value.push(4)
     }
     return {
